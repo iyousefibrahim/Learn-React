@@ -56,29 +56,36 @@ function Header() {
 }
 
 function Menu() {
+  const pizzaLength = pizzaData.length;
+  
   return (
     <main className='menu'>
       <h2>Our Menu</h2>
-      <Pizza
-        name="Pizza Focaccia"
-        photoName="pizzas/focaccia.jpg"
-        ingredients="Bread with italian olive oil and rosemary"
-        price={6}
-      />
+
+      {pizzaLength > 0 ? 
+      <ul className='pizzas'>
+        {pizzaData.map((pizza) => {
+          return <Pizza key={pizza.name} pizzaObj={pizza}></Pizza>
+        })}
+      </ul>: 
+      <p>
+        Sorry no pizzas :( 
+      </p>}
+
     </main>
   );
 }
 
 function Pizza(props) {
   return (
-    <div className='pizza'>
-      <img src={props.photoName} alt={props.name} />
-      <div className=''>
-        <h1>{props.name}</h1>
-        <p>{props.ingredients}</p>
-        <span>{props.price} $</span>
+    <li className={`pizza ${props.pizzaObj.soldOut ? "sold-out" : ""}`}>
+      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+      <div>
+        <h1>{props.pizzaObj.name}</h1>
+        <p>{props.pizzaObj.ingredients}</p>
+        <span>{props.pizzaObj.soldOut ? "SOLD OUT" : props.pizzaObj.price + '$'} </span>
       </div>
-    </div>
+    </li>
   );
 }
 
